@@ -1,0 +1,27 @@
+-- database: /Users/artemsaman/Desktop/Jupyter_note/wallet.db
+
+SELECT 
+    strftime("%W", E."Дата и время") Week_Num,
+    ROUND(SUM(E."Сумма в валюте счета"), 2) as Total_E
+FROM Expenses AS E
+WHERE 
+    E."Категория" NOT IN (
+        "Купил (основная сумма)",
+        "Дал в долг",
+        "Другое"
+    )
+GROUP BY Week_Num
+ORDER BY Week_Num DESC;
+
+
+SELECT 
+    strftime("%W", I."Дата и время") Week_Num,
+    ROUND(SUM(I."Сумма в валюте счета"), 2) as Total_I
+FROM Income AS I
+WHERE 
+    I."Категория" IN (
+        "Работа",
+        "Прибыль с продажи"
+    )
+GROUP BY Week_Num
+ORDER BY Week_Num DESC;
